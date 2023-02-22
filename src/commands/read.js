@@ -1,35 +1,29 @@
 import {spawn} from 'child_process';
-import chalk from 'chalk';
+import { COLORS } from '../colors.js';
+import fs from 'fs';
+import { print } from '../utilities.js';
 
-const log = console.log;
-
-const COLORS = {
-    dateColor:chalk.blue,
-    errorColor:chalk.bold.red,
-    warningColor:chalk.hex('#FFA500'),
-    noticeColor:chalk.magenta,
-    traceColor:chalk.bold.red,
-    otherColor:chalk.green,
-
-
-    bgErrorCount:chalk.bold.bgRed,
-
-    bgWarningCount:chalk.bold.bgYellowBright,
-
-    bgNoticesCount:chalk.bold.bgMagentaBright,
-
-    bgTraceCount:chalk.bold.bgRed,
-
-};
-
-const command = spawn('tail', ["-f","/Applications/MAMP/logs/php_error.log"]);
-
-
-command.stdout.on('data', output => {
-    const arrayOfOutputs = output.toString().split('\n');
-    log(printPretty(arrayOfOutputs))
-});
-
+export const read = () =>{
+    const path = process.argv[3];
+    if(path){
+        fs.lstat(path, (err, stats) => {
+            if(err){
+                print(COLORS.errorColor("Something went wrong",err))
+            }
+            else{
+                const command = spawn('tail', ["-f",path]);
+    
+                command.stdout.on('data', output => {
+                    const arrayOfOutputs = output.toString().split('\n');
+                    print(printPretty(arrayOfOutputs))
+                });
+            }
+        });
+    }else{
+        print(COLORS.errorColor("Please provide a php error log file path"))
+    }
+  
+}
 
 function printPretty(arrayOfOutputs){
     let finalOutput = '';
