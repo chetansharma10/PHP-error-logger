@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
 export const COLORS = {
-    dateColor:chalk.bold.green,
+    dateColor:chalk.green,
     errorColor:chalk.bold.red,
     warningColor:chalk.hex('#FFA500'),
     noticeColor:chalk.bold.magenta,
