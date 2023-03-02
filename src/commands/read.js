@@ -43,7 +43,7 @@ function printPretty(arrayOfOutputs){
         let endingBracketIndex = item.search(/\]/i);
         if(startingBracketIndex>=0 && endingBracketIndex>=0){
             let finalSearchedDate = item.substring(startingBracketIndex, endingBracketIndex+1);
-            outputTemp+=COLORS.dateColor(finalSearchedDate);
+            outputTemp+=COLORS.dateColor(finalSearchedDate)+" ";
         }
 
         //** color the error **
@@ -57,7 +57,7 @@ function printPretty(arrayOfOutputs){
             let startingErrorIndex = endingBracketIndex+2;
             let endingErrorIndex = item.length;
             let finalError= item.substring(startingErrorIndex, endingErrorIndex);
-            outputTemp+= COLORS.errorColor(finalError) +"\n";
+            outputTemp+= COLORS.errorColor(finalError) +" \n";
             n_errors+=1;
         }
 
